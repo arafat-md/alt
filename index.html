@@ -22,8 +22,8 @@
       --ink-dim:   #4A6A82;
       --rule:      rgba(234,234,234,0.08);
       --rule-mid:  rgba(234,234,234,0.14);
-      --accent:    #2A5D8F;
-      --accent-dim:#1E4469;
+      --accent:    #4A9EDB;
+      --accent-dim:#2A7AB8;
       --highlight: #8B1E3F;
     }
 
@@ -383,7 +383,7 @@
       font-family: 'JetBrains Mono', monospace;
       font-size: 10px; color: var(--accent); margin-bottom: 24px; letter-spacing: 0.1em;
     }
-    .exp-title { font-size: 19px; font-weight: 600; margin-bottom: 14px; color: var(--accent); }
+    .exp-title { font-size: 19px; font-weight: 600; margin-bottom: 14px; color: var(--ink); }
     .exp-body { font-size: 15px; color: var(--ink-mid); line-height: 1.8; font-weight: 300; }
 
     /* tag-list used in Profile + Expertise */
@@ -392,6 +392,67 @@
       font-family: 'JetBrains Mono', monospace; font-size: 9px; letter-spacing: 0.1em;
       text-transform: uppercase; padding: 4px 10px;
       border: 1px solid var(--rule-mid); color: var(--ink-mid);
+    }
+
+    /* =============================================
+       EXPERIENCE / TIMELINE
+       ============================================= */
+    #experience { background: var(--bg2); }
+    .timeline { position: relative; padding-left: 28px; }
+    .timeline::before {
+      content: ''; position: absolute; left: 0; top: 8px; bottom: 8px;
+      width: 1px; background: var(--rule-mid);
+    }
+    .tl-item {
+      position: relative; margin-bottom: 52px;
+    }
+    .tl-item:last-child { margin-bottom: 0; }
+    .tl-dot {
+      position: absolute; left: -34px; top: 6px;
+      width: 13px; height: 13px; border-radius: 50%;
+      border: 2px solid var(--accent); background: var(--bg2);
+      transition: background 0.2s;
+    }
+    .tl-item:first-child .tl-dot { background: var(--accent); }
+    .tl-meta {
+      display: flex; align-items: center; gap: 12px;
+      margin-bottom: 8px; flex-wrap: wrap;
+    }
+    .tl-period {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px; letter-spacing: 0.14em;
+      text-transform: uppercase; color: var(--accent);
+    }
+    .tl-badge {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 9px; letter-spacing: 0.1em; text-transform: uppercase;
+      padding: 3px 9px; border: 1px solid var(--rule-mid);
+      color: var(--ink-dim);
+    }
+    .tl-badge.current {
+      border-color: var(--accent); color: var(--accent);
+    }
+    .tl-role {
+      font-family: 'Inter', sans-serif;
+      font-size: 20px; font-weight: 600; color: var(--ink);
+      margin-bottom: 4px; line-height: 1.3;
+    }
+    .tl-org {
+      font-size: 15px; color: var(--ink-mid); margin-bottom: 14px;
+    }
+    .tl-org a { color: var(--accent); text-decoration: none; }
+    .tl-org a:hover { text-decoration: underline; }
+    .tl-desc {
+      font-size: 16px; font-weight: 300; color: var(--ink-mid);
+      line-height: 1.8; max-width: 680px;
+    }
+    .tl-outcomes {
+      display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px;
+    }
+    .tl-outcome {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 9px; letter-spacing: 0.1em; text-transform: uppercase;
+      padding: 4px 11px; border: 1px solid var(--rule-mid); color: var(--ink-mid);
     }
 
     /* =============================================
@@ -514,6 +575,8 @@
       .hero-desc { border-right: none; border-bottom: 1px solid var(--rule); padding-right: 0; }
       .hero-cta { padding-left: 0; }
       .dl-card { flex-direction: column; align-items: flex-start; padding: 28px 20px; }
+      .tl-meta { gap: 8px; }
+      .tl-role { font-size: 18px; }
       .footer-inner { flex-direction: column; gap: 8px; text-align: center; }
     }
   </style>
@@ -597,6 +660,7 @@
         <li><a href="#about">Profile</a></li>
         <li><a href="#projects">Projects</a></li>
         <li><a href="#expertise">Expertise</a></li>
+        <li><a href="#experience">Experience</a></li>
         <li><a href="#downloads">Resources</a></li>
         <li><a href="#contact">Contact</a></li>
       </ul>
@@ -624,16 +688,16 @@
         <div class="hero-desc">
           <div class="hero-metrics">
             <div class="metric">
-              <div class="metric-val">4+</div>
-              <div class="metric-label">Years experience</div>
+              <div class="metric-val">18%</div>
+              <div class="metric-label">Peak stress reduced</div>
             </div>
             <div class="metric">
-              <div class="metric-val">3</div>
-              <div class="metric-label">Class societies</div>
+              <div class="metric-val">8%</div>
+              <div class="metric-label">Weight saved — Class compliant</div>
             </div>
             <div class="metric">
-              <div class="metric-val">20+</div>
-              <div class="metric-label">FEA projects</div>
+              <div class="metric-val">Zero</div>
+              <div class="metric-label">DNV iterations — first submission</div>
             </div>
           </div>
           FEA-driven structural assessment, fatigue analysis, and stability for offshore projects. Experienced under European Class requirements — BV, DNV, and LR — for shipyard-ready deliverables.
@@ -756,6 +820,84 @@
               <span class="tag">MS Office</span>
             </div>
           </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =============================================
+       EXPERIENCE (#experience) — edit roles & dates here
+       ============================================= -->
+  <section id="experience">
+    <div class="container">
+      <div class="section-wrap">
+        <div class="section-header fade-in">
+          <h2 class="section-title">Experience</h2>
+          <span class="section-idx">004 — Work History</span>
+        </div>
+        <div class="timeline fade-in">
+
+          <!-- ── ROLE 1 ── -->
+          <div class="tl-item">
+            <div class="tl-dot"></div>
+            <div class="tl-meta">
+              <span class="tl-period">May 2022 — Present</span>
+              <span class="tl-badge current">Current</span>
+            </div>
+            <div class="tl-role">Naval Architect &amp; Structural Engineer</div>
+            <div class="tl-org">Offshore &amp; Marine Engineering Ltd., Bangladesh</div>
+            <p class="tl-desc">
+              Lead FEA analyst for offshore structural projects — fatigue hotspot stress assessments, local plate buckling studies, and heavy-lifting device certification under BV, DNV, and LR rules. Deliver full FEA workflows from geometry and meshing through post-processing and Class submission. Author technical reports and manage direct liaison with classification surveyors.
+            </p>
+            <div class="tl-outcomes">
+              <span class="tl-outcome">BV · DNV · LR compliance</span>
+              <span class="tl-outcome">ANSYS FEA</span>
+              <span class="tl-outcome">Fatigue assessment</span>
+              <span class="tl-outcome">Offshore structures</span>
+              <span class="tl-outcome">Class submissions</span>
+            </div>
+          </div>
+
+          <!-- ── ROLE 2 ── -->
+          <div class="tl-item">
+            <div class="tl-dot"></div>
+            <div class="tl-meta">
+              <span class="tl-period">2022 — 2024</span>
+              <span class="tl-badge">Part-time</span>
+            </div>
+            <div class="tl-role">External Supervisor — Ship Design Projects</div>
+            <div class="tl-org">Bangladesh Maritime University, Dhaka</div>
+            <p class="tl-desc">
+              Supervised 3 undergraduate ship design capstone projects covering hull form optimisation, intact and damage stability analysis, and production-ready technical drawing packages. Provided industry guidance on classification requirements, design standards, and FEA methodology to graduating cohorts.
+            </p>
+            <div class="tl-outcomes">
+              <span class="tl-outcome">3 projects supervised</span>
+              <span class="tl-outcome">Hull design</span>
+              <span class="tl-outcome">Stability analysis</span>
+              <span class="tl-outcome">Academic mentoring</span>
+            </div>
+          </div>
+
+          <!-- ── ROLE 3 ── -->
+          <div class="tl-item">
+            <div class="tl-dot"></div>
+            <div class="tl-meta">
+              <span class="tl-period">Freelance</span>
+              <span class="tl-badge">Contract</span>
+            </div>
+            <div class="tl-role">Freelance Naval Architect</div>
+            <div class="tl-org">Norman Shipyard, Netherlands</div>
+            <p class="tl-desc">
+              Remote contract engagement delivering naval architecture services for a Dutch shipyard — scantling design, stability calculations, and structural assessments aligned with European Class requirements. Produced shipyard-ready technical documentation for vessel construction and refit projects.
+            </p>
+            <div class="tl-outcomes">
+              <span class="tl-outcome">European Class rules</span>
+              <span class="tl-outcome">Scantling design</span>
+              <span class="tl-outcome">Remote delivery</span>
+              <span class="tl-outcome">Netherlands</span>
+            </div>
+          </div>
+
         </div>
       </div>
     </div>
