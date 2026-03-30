@@ -5,6 +5,18 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Md. Yasin Arafat — Naval Architect & Marine Engineer</title>
   <meta name="description" content="Naval Architect specializing in advanced FEA, offshore structural analysis, fatigue assessment, and class-compliant vessel design. 4 years experience. Open to global opportunities." />
+  <!-- =============================================
+       OG / SOCIAL META — edit URL and image path here
+       ============================================= -->
+  <meta property="og:type"        content="website" />
+  <meta property="og:url"         content="https://arafat-md.github.io/alt/" />
+  <meta property="og:title"       content="Md. Yasin Arafat — Naval Architect & Marine Engineer" />
+  <meta property="og:description" content="FEA-driven structural assessment, fatigue analysis, and offshore compliance. 4+ years · BV · DNV · LR." />
+  <meta property="og:image"       content="https://arafat-md.github.io/alt/indx/ptn1.png" />
+  <meta name="twitter:card"       content="summary_large_image" />
+  <meta name="twitter:title"      content="Md. Yasin Arafat — Naval Architect & Marine Engineer" />
+  <meta name="twitter:description" content="FEA-driven structural assessment, fatigue analysis, and offshore compliance. 4+ years · BV · DNV · LR." />
+  <meta name="twitter:image"      content="https://arafat-md.github.io/alt/indx/ptn1.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Roboto:wght@300;400;500&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet" />
@@ -548,8 +560,66 @@
     }
 
     /* =============================================
-       ANIMATIONS
+       HAMBURGER MENU
        ============================================= */
+    .nav-hamburger {
+      display: none;
+      flex-direction: column; justify-content: center; align-items: center;
+      gap: 5px; width: 36px; height: 36px;
+      background: none; border: none; cursor: pointer; padding: 4px;
+      z-index: 600;
+    }
+    .nav-hamburger span {
+      display: block; width: 22px; height: 1.5px;
+      background: var(--ink); border-radius: 2px;
+      transition: transform 0.3s, opacity 0.3s, width 0.3s;
+      transform-origin: center;
+    }
+    .nav-hamburger.open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+    .nav-hamburger.open span:nth-child(2) { opacity: 0; width: 0; }
+    .nav-hamburger.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+
+    /* mobile nav drawer */
+    .mobile-nav {
+      display: none;
+      position: fixed; top: 52px; left: 0; right: 0;
+      background: rgba(11,29,42,0.98);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--rule-mid);
+      z-index: 490;
+      padding: 0;
+      max-height: 0; overflow: hidden;
+      transition: max-height 0.35s ease, padding 0.35s ease;
+    }
+    .mobile-nav.open {
+      max-height: 400px;
+      padding: 20px 0 24px;
+    }
+    .mobile-nav ul {
+      list-style: none;
+      display: flex; flex-direction: column;
+    }
+    .mobile-nav ul li a {
+      display: block;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px; letter-spacing: 0.18em;
+      text-transform: uppercase; color: var(--ink-mid);
+      text-decoration: none; padding: 14px 24px;
+      border-bottom: 1px solid var(--rule);
+      transition: color 0.2s, background 0.2s;
+    }
+    .mobile-nav ul li a:hover,
+    .mobile-nav ul li a.active { color: var(--accent); background: rgba(74,158,219,0.05); }
+    .mobile-nav ul li:last-child a { border-bottom: none; }
+
+    /* =============================================
+       NAV ACTIVE STATE (scroll highlight)
+       ============================================= */
+    .nav-links a.active { color: var(--ink); }
+    .nav-links a.active::after {
+      content: ''; display: block; height: 1px;
+      background: var(--accent); margin-top: 2px;
+    }
     @keyframes fadeUp {
       from { opacity: 0; transform: translateY(18px); }
       to   { opacity: 1; transform: translateY(0); }
@@ -565,7 +635,10 @@
        ============================================= */
     @media (max-width: 900px) {
       .container { padding: 0 24px; }
-      .hero-bottom { grid-template-columns: 1fr; }
+      .nav-links { display: none; }
+      .nav-status { display: none; }
+      .nav-hamburger { display: flex; }
+      .mobile-nav { display: block; }
       .about-grid, .exp-grid, .dl-grid, .contact-grid { grid-template-columns: 1fr; }
       .about-left, .contact-left { border-right: none; border-bottom: 1px solid var(--rule); padding-right: 0; padding-bottom: 48px; }
       .about-right, .contact-right { padding-left: 0; padding-top: 48px; }
@@ -668,8 +741,23 @@
         <span class="status-dot"></span>
         Available for opportunities
       </div>
+      <button class="nav-hamburger" id="nav-hamburger" aria-label="Toggle menu">
+        <span></span><span></span><span></span>
+      </button>
     </div>
   </nav>
+
+  <!-- Mobile nav drawer -->
+  <div class="mobile-nav" id="mobile-nav">
+    <ul>
+      <li><a href="#about"      onclick="closeMobileNav()">Profile</a></li>
+      <li><a href="#projects"   onclick="closeMobileNav()">Projects</a></li>
+      <li><a href="#expertise"  onclick="closeMobileNav()">Expertise</a></li>
+      <li><a href="#experience" onclick="closeMobileNav()">Experience</a></li>
+      <li><a href="#downloads"  onclick="closeMobileNav()">Resources</a></li>
+      <li><a href="#contact"    onclick="closeMobileNav()">Contact</a></li>
+    </ul>
+  </div>
 
   <!-- =============================================
        HERO — edit headline, description & CTA here
@@ -992,9 +1080,11 @@
 
   <!-- =============================================
        JAVASCRIPT — cursor, grid, modal, lightbox,
+       hamburger menu, word animation, active nav,
        scroll observer. Don't edit unless needed.
        ============================================= -->
   <script>
+    // ── CURSOR ──
     const cursor = document.getElementById('cursor');
     const trail  = document.getElementById('cursor-trail');
     let mx = 0, my = 0, tx = 0, ty = 0;
@@ -1013,47 +1103,159 @@
       el.addEventListener('mouseleave', () => cursor.classList.remove('hover'));
     });
 
-    const grid = document.getElementById('project-grid');
+    // ── HAMBURGER MENU ──
+    const hamburger  = document.getElementById('nav-hamburger');
+    const mobileNav  = document.getElementById('mobile-nav');
+    function closeMobileNav() {
+      hamburger.classList.remove('open');
+      mobileNav.classList.remove('open');
+      document.body.style.overflow = '';
+    }
+    hamburger.addEventListener('click', () => {
+      const isOpen = mobileNav.classList.toggle('open');
+      hamburger.classList.toggle('open', isOpen);
+      document.body.style.overflow = isOpen ? 'hidden' : '';
+    });
+    // close on outside click
+    document.addEventListener('click', e => {
+      if (mobileNav.classList.contains('open') &&
+          !mobileNav.contains(e.target) &&
+          !hamburger.contains(e.target)) {
+        closeMobileNav();
+      }
+    });
+
+    // ── WORD-BY-WORD HERO ANIMATION ──
+    const h1 = document.querySelector('.hero-h1');
+    if (h1) {
+      // preserve em tags and line breaks, split only text nodes into words
+      const html   = h1.innerHTML;
+      // split on spaces but keep <br> and <em>...</em> as single tokens
+      const tokens = html.match(/<br\s*\/?>/gi
+        ? html.split(/(<br\s*\/?>|<em>[\s\S]*?<\/em>)/gi)
+        : [html]
+      ) || [html];
+
+      let wordIdx = 0;
+      const parts = html.split(/(<br\s*\/?>|<em>[\s\S]*?<\/em>)/gi);
+      let rebuilt = '';
+      parts.forEach(part => {
+        if (!part) return;
+        if (/^<br/i.test(part)) {
+          rebuilt += part;
+        } else if (/^<em/i.test(part)) {
+          // wrap the whole em as one animated unit
+          rebuilt += `<span class="hw" style="display:inline-block;opacity:0;transform:translateY(14px);transition:opacity 0.45s ease,transform 0.45s ease;transition-delay:${(0.45 + wordIdx * 0.07).toFixed(2)}s">${part}</span>`;
+          wordIdx++;
+        } else {
+          // split plain text into words
+          part.split(/(\s+)/).forEach(chunk => {
+            if (/^\s+$/.test(chunk)) {
+              rebuilt += chunk; // keep spaces as-is
+            } else if (chunk) {
+              rebuilt += `<span class="hw" style="display:inline-block;opacity:0;transform:translateY(14px);transition:opacity 0.45s ease,transform 0.45s ease;transition-delay:${(0.45 + wordIdx * 0.07).toFixed(2)}s">${chunk}</span>`;
+              wordIdx++;
+            }
+          });
+        }
+      });
+      h1.style.animation = 'none';
+      h1.style.opacity   = '1';
+      h1.innerHTML = rebuilt;
+      // trigger after a short delay so the browser has painted
+      requestAnimationFrame(() => {
+        setTimeout(() => {
+          document.querySelectorAll('.hw').forEach(w => {
+            w.style.opacity   = '1';
+            w.style.transform = 'translateY(0)';
+          });
+        }, 120);
+      });
+    }
+
+    // ── PROJECT GRID ──
+    const grid    = document.getElementById('project-grid');
     const countEl = document.getElementById('project-count');
     countEl.textContent = String(PROJECTS.length).padStart(3,'0') + ' Projects';
 
     PROJECTS.forEach((p, i) => {
+      const num  = String(i + 1).padStart(2, '0');
       const card = document.createElement('div');
       card.className = 'project-card';
-      card.innerHTML = `<img class="card-thumb" src="${p.images[0]}" alt="${p.title}" />
+      card.innerHTML = `<img class="card-thumb" src="${p.images[0]}" alt="${p.title}" loading="lazy"/>
         <div class="card-body">
-          <div class="card-num">0${i+1}</div>
+          <div class="card-num">${num}</div>
           <div class="card-title">${p.title}</div>
           <div class="card-tags">${p.tags}</div>
-        </div><div class="card-arrow">↗</div>`;
+        </div><div class="card-arrow">&#x2197;</div>`;
       card.onclick = () => openModal(i);
       grid.appendChild(card);
     });
 
+    // ── MODAL ──
     function openModal(i) {
       const p = PROJECTS[i];
-      document.getElementById('modal-num').textContent = 'Project 0' + (i+1);
-      document.getElementById('modal-title').textContent = p.title;
-      document.getElementById('modal-problem').textContent = p.problem;
+      document.getElementById('modal-num').textContent      = 'Project ' + String(i+1).padStart(2,'0');
+      document.getElementById('modal-title').textContent    = p.title;
+      document.getElementById('modal-problem').textContent  = p.problem;
       document.getElementById('modal-solution').textContent = p.solution;
-      document.getElementById('modal-impact').textContent = p.impact;
-      document.getElementById('modal-tools').textContent = p.tags;
+      document.getElementById('modal-impact').textContent   = p.impact;
+      document.getElementById('modal-tools').textContent    = p.tags;
       const imgs = document.getElementById('modal-images');
       imgs.innerHTML = '';
-      p.images.forEach(src => {
-        const img = document.createElement('img');
-        img.src = src; img.onclick = () => openLightbox(src);
-        imgs.appendChild(img);
-      });
+      if (p.images && p.images.length) {
+        imgs.style.display = 'grid';
+        imgs.className = 'modal-images' + (p.images.length === 1 ? ' single' : '');
+        p.images.forEach(src => {
+          const img = document.createElement('img');
+          img.src = src; img.alt = p.title;
+          img.onclick = () => openLightbox(src);
+          imgs.appendChild(img);
+        });
+      } else { imgs.style.display = 'none'; }
       document.getElementById('modal-overlay').classList.add('open');
       document.body.style.overflow = 'hidden';
+      document.getElementById('modal').scrollTop = 0;
     }
-    function closeModal() { document.getElementById('modal-overlay').classList.remove('open'); document.body.style.overflow = ''; }
-    function openLightbox(src) { document.getElementById('lightbox-img').src = src; document.getElementById('lightbox').classList.add('open'); }
-    function closeLightbox() { document.getElementById('lightbox').classList.remove('open'); }
-    document.getElementById('modal-overlay').onclick = function(e) { if (e.target === this) closeModal(); };
-    document.getElementById('lightbox').onclick = function(e) { if (e.target === this) closeLightbox(); };
+    function closeModal() {
+      document.getElementById('modal-overlay').classList.remove('open');
+      document.body.style.overflow = '';
+    }
+    function openLightbox(src) {
+      document.getElementById('lightbox-img').src = src;
+      document.getElementById('lightbox').classList.add('open');
+    }
+    function closeLightbox() {
+      document.getElementById('lightbox').classList.remove('open');
+      document.getElementById('lightbox-img').src = '';
+    }
+    document.getElementById('modal-overlay').addEventListener('click', function(e) {
+      if (e.target === this) closeModal();
+    });
+    document.getElementById('lightbox').addEventListener('click', function(e) {
+      if (e.target === this) closeLightbox();
+    });
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape') { closeLightbox(); closeModal(); closeMobileNav(); }
+    });
 
+    // ── ACTIVE NAV LINK ON SCROLL ──
+    const sections   = document.querySelectorAll('section[id]');
+    const navAnchors = document.querySelectorAll('.nav-links a, .mobile-nav a');
+    const navObserver = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const id = entry.target.getAttribute('id');
+          navAnchors.forEach(a => {
+            const match = a.getAttribute('href') === '#' + id;
+            a.classList.toggle('active', match);
+          });
+        }
+      });
+    }, { threshold: 0.25, rootMargin: '-52px 0px -40% 0px' });
+    sections.forEach(s => navObserver.observe(s));
+
+    // ── SCROLL FADE-IN ──
     const observer = new IntersectionObserver(entries => {
       entries.forEach((entry, idx) => {
         if (entry.isIntersecting) {
